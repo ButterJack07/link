@@ -109,5 +109,23 @@
       "NORTH",
       "SEASON"
     ]
+  },
+  {
+    "id": "000013",
+    "clue": "不期而遇",
+    "answers": [
+      "ENCOUNTER",
+      "CHANCE",
+      "MEET"
+    ]
+  },
+  {
+    "id": "000014",
+    "clue": "朱砂痣",
+    "answers": [
+      "REGRET",
+      "BREAKUP",
+      "MEMORY"
+    ]
   }
 ]
