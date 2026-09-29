@@ -55,5 +55,14 @@
       "PLANE",
       "COACH"
     ]
+  },
+  {
+    "id": "000007",
+    "clue": "丈量天地，比较四方",
+    "answers": [
+      "LENGTH",
+      "WIDTH",
+      "HEIGHT"
+    ]
   }
 ]
