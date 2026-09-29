@@ -46,5 +46,14 @@
       "PKU",
       "NJU"
     ]
+  },
+  {
+    "id": "000006",
+    "clue": "舟车劳顿",
+    "answers": [
+      "TRAIN",
+      "PLANE",
+      "COACH"
+    ]
   }
 ]
