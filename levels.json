@@ -91,5 +91,23 @@
       "SCISSORS",
       "STONE"
     ]
+  },
+  {
+    "id": "000011",
+    "clue": "一曲终了",
+    "answers": [
+      "CHEER",
+      "MUSIC",
+      "APPLAUSE"
+    ]
+  },
+  {
+    "id": "000012",
+    "clue": "我一路向北，离开有你的季节",
+    "answers": [
+      "TRAVEL",
+      "NORTH",
+      "SEASON"
+    ]
   }
 ]
