@@ -5,7 +5,6 @@ let github = { token: '', sha: {} };
 const repo = 'ButterJack07/link';
 
 function normalize(value) { return value.trim().toUpperCase().replace(/[^A-Z]/g, ''); }
-function duplicateLetters(word) { return /(.)\1/.test(word); }
 function save() { localStorage.setItem(KEY, JSON.stringify(data)); }
 function normalizeLevel(level) { return { id: String(level.id).padStart(6, '0'), clue: level.clue || '', answers: Array.isArray(level.answers) ? level.answers : [] }; }
 function download(name, content) { const url = URL.createObjectURL(new Blob([JSON.stringify(content, null, 2)], { type: 'application/json' })); const link = document.createElement('a'); link.href = url; link.download = name; link.click(); URL.revokeObjectURL(url); }
@@ -30,7 +29,7 @@ async function init() {
   }
   render();
 }
-$('levelForm').addEventListener('submit', event => { event.preventDefault(); const answers = [...document.querySelectorAll('.answer')].map(input => normalize(input.value)); if (new Set(answers).size !== 3 || answers.some(word => !word || duplicateLetters(word))) return alert('填写三个不同的英文答案，且不能有连续重复字母。'); const next = data.levels.reduce((max, level) => Math.max(max, Number(level.id) || 0), 0) + 1; const id = String(next).padStart(6, '0'); data.levels.push({ id, clue: $('clue').value.trim(), answers }); save(); render(); event.currentTarget.reset(); });
+$('levelForm').addEventListener('submit', event => { event.preventDefault(); const answers = [...document.querySelectorAll('.answer')].map(input => normalize(input.value)); if (new Set(answers).size !== 3 || answers.some(word => !word)) return alert('请填写三个不同的英文答案。'); const next = data.levels.reduce((max, level) => Math.max(max, Number(level.id) || 0), 0) + 1; const id = String(next).padStart(6, '0'); data.levels.push({ id, clue: $('clue').value.trim(), answers }); save(); render(); event.currentTarget.reset(); });
 $('dailyForm').addEventListener('submit', event => { event.preventDefault(); data.daily[$('dailyDate').value] = $('dailyLevel').value; save(); alert('已加入每日挑战表。'); });
 $('downloadLevels').addEventListener('click', () => download('levels.json', data.levels));
 $('downloadDaily').addEventListener('click', () => download('daily.json', data.daily));
