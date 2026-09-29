@@ -82,5 +82,14 @@
       "RAIN",
       "REFLECTION"
     ]
+  },
+  {
+    "id": "000010",
+    "clue": "三局两胜",
+    "answers": [
+      "PAPER",
+      "SCISSORS",
+      "STONE"
+    ]
   }
 ]
