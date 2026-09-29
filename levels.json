@@ -37,5 +37,14 @@
       "SECOND",
       "THIRD"
     ]
+  },
+  {
+    "id": "000005",
+    "clue": "top 3",
+    "answers": [
+      "THU",
+      "PKU",
+      "NJU"
+    ]
   }
 ]
