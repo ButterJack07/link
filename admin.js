@@ -1,5 +1,6 @@
 const $ = (id) => document.getElementById(id);
 const KEY = 'link-the-word-content';
+const TOKEN_KEY = 'link-the-word-github-token';
 let data = { levels: [], daily: {} };
 let github = { token: '', sha: {} };
 const repo = 'ButterJack07/link';
@@ -11,7 +12,7 @@ function download(name, content) { const url = URL.createObjectURL(new Blob([JSO
 function setStatus(text, error = false) { $('publishStatus').textContent = text; $('publishStatus').classList.toggle('error', error); }
 async function githubRequest(path, options = {}) { const response = await fetch(`https://api.github.com/repos/${repo}/contents/${path}?ref=master`, { ...options, headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${github.token}`, 'Content-Type': 'application/json', ...(options.headers || {}) } }); if (!response.ok) { let detail = ''; try { detail = (await response.json()).message || ''; } catch {} throw new Error(`${response.status}${detail ? `: ${detail}` : ''}`); } return response.json(); }
 function decodeGithubContent(value) { const binary = atob(value.replace(/\n/g, '')); const bytes = Uint8Array.from(binary, char => char.charCodeAt(0)); return new TextDecoder().decode(bytes); }
-async function connectGithub() { const token = $('githubToken').value.trim(); if (!token) return setStatus('请先粘贴 GitHub Token。', true); github.token = token; setStatus('正在读取 GitHub 数据…'); try { const [levelsFile, dailyFile] = await Promise.all([githubRequest('levels.json'), githubRequest('daily.json')]); data.levels = JSON.parse(decodeGithubContent(levelsFile.content)); data.daily = JSON.parse(decodeGithubContent(dailyFile.content)); github.sha = { 'levels.json': levelsFile.sha, 'daily.json': dailyFile.sha }; render(); setStatus('已连接，可以直接发布。'); } catch (error) { github.token = ''; setStatus(`连接失败：${error.message}`, true); } }
+async function connectGithub() { const token = $('githubToken').value.trim(); if (!token) return setStatus('请先粘贴 GitHub Token。', true); github.token = token; localStorage.setItem(TOKEN_KEY, token); setStatus('正在读取 GitHub 数据…'); try { const [levelsFile, dailyFile] = await Promise.all([githubRequest('levels.json'), githubRequest('daily.json')]); data.levels = JSON.parse(decodeGithubContent(levelsFile.content)); data.daily = JSON.parse(decodeGithubContent(dailyFile.content)); github.sha = { 'levels.json': levelsFile.sha, 'daily.json': dailyFile.sha }; render(); setStatus('已连接，可以直接发布。'); } catch (error) { github.token = ''; setStatus(`连接失败：${error.message}`, true); } }
 async function publishFile(path, content, message) { const current = await githubRequest(path); const bytes = new TextEncoder().encode(JSON.stringify(content, null, 2) + '\n'); let binary = ''; bytes.forEach(byte => { binary += String.fromCharCode(byte); }); const result = await githubRequest(path, { method: 'PUT', body: JSON.stringify({ message, content: btoa(binary), sha: current.sha, branch: 'master' }) }); github.sha[path] = result.content.sha; }
 async function publishGithub() { if (!github.token) return setStatus('请先连接 GitHub。', true); setStatus('正在提交 levels.json…'); try { await publishFile('levels.json', data.levels, 'Update level library'); setStatus('levels.json 已提交，正在提交 daily.json…'); await publishFile('daily.json', data.daily, 'Update daily challenges'); setStatus('发布成功，已写入 GitHub master 分支。'); } catch (error) { setStatus(`发布失败：${error.message}`, true); } }
 function render() {
@@ -54,4 +55,6 @@ $('downloadLevels').addEventListener('click', () => download('levels.json', data
 $('downloadDaily').addEventListener('click', () => download('daily.json', data.daily));
 $('connectGithub').addEventListener('click', connectGithub);
 $('publishGithub').addEventListener('click', publishGithub);
+const savedToken = localStorage.getItem(TOKEN_KEY);
+if (savedToken) { $('githubToken').value = savedToken; github.token = savedToken; }
 init();
