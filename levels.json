@@ -73,5 +73,14 @@
       "RED",
       "GREEN"
     ]
+  },
+  {
+    "id": "000009",
+    "clue": "就算大雨让这座城市颠倒",
+    "answers": [
+      "CITY",
+      "RAIN",
+      "REFLECTION"
+    ]
   }
 ]
