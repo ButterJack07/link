@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link The Word - 题库管理</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main>
+    <header><p>LINK THE WORD / CONTENT</p><h1>题库管理</h1><span>静态数据编辑器 - 下载文件后提交到 GitHub 仓库</span></header>
+    <section class="grid">
+      <form id="levelForm" class="card">
+        <h2>新增题目</h2>
+        <label>题目名称<input id="title" required maxlength="40" placeholder="例如：海边午后"></label>
+        <label>题面<textarea id="clue" required maxlength="120" placeholder="一句中文题面"></textarea></label>
+        <div class="answers"><label>答案一<input class="answer" required maxlength="25"></label><label>答案二<input class="answer" required maxlength="25"></label><label>答案三<input class="answer" required maxlength="25"></label></div>
+        <button type="submit">加入题库</button>
+      </form>
+      <form id="dailyForm" class="card">
+        <h2>安排每日挑战</h2>
+        <label>日期<input id="dailyDate" type="date" required></label>
+        <label>选择题目<select id="dailyLevel" required></select></label>
+        <button type="submit">加入每日表</button>
+        <p>游戏会从 <code>daily.json</code> 按日期查询对应题目。</p>
+      </form>
+    </section>
+    <section class="card export-card"><div><h2>发布数据</h2><p>编辑完成后下载两个 JSON 文件，并覆盖仓库根目录中的同名文件后提交。</p></div><div class="exports"><button id="downloadLevels" type="button">下载 levels.json</button><button id="downloadDaily" type="button">下载 daily.json</button></div></section>
+    <section class="card"><h2>当前题库</h2><div id="levelList"></div></section>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>
