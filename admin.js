@@ -15,7 +15,7 @@ async function publishFile(path, content, message) { const bytes = new TextEncod
 async function publishGithub() { if (!github.token) return setStatus('请先连接 GitHub。', true); setStatus('正在提交数据…'); try { await publishFile('levels.json', data.levels, 'Update level library'); await publishFile('daily.json', data.daily, 'Update daily challenges'); setStatus('发布成功，游戏会自动读取最新题库。'); } catch { setStatus('发布失败，请确认 Token 有 Contents: Read and write 权限。', true); } }
 function render() {
   $('dailyLevel').innerHTML = data.levels.map(level => `<option value="${level.id}">${level.id} - ${level.title}</option>`).join('');
-  $('levelList').innerHTML = data.levels.map(level => `<article><b>${level.id}</b><span>${level.title}</span><small>${level.clue}</small><em>${level.answers.join(' / ')}</em></article>`).join('') || '<p>还没有题目。</p>';
+  $('levelList').innerHTML = data.levels.map(level => `<article><b>${level.id}</b><span>${level.clue}</span><em>${level.answers.join(' / ')}</em></article>`).join('') || '<p>还没有题目。</p>';
 }
 async function init() {
   const cached = localStorage.getItem(KEY);
@@ -23,7 +23,7 @@ async function init() {
   const [levels, daily] = await Promise.all([fetch('levels.json').then(response => response.json()), fetch('daily.json').then(response => response.json())]);
   data = { levels, daily }; render();
 }
-$('levelForm').addEventListener('submit', event => { event.preventDefault(); const answers = [...document.querySelectorAll('.answer')].map(input => normalize(input.value)); if (new Set(answers).size !== 3 || answers.some(word => !word || duplicateLetters(word))) return alert('填写三个不同的英文答案，且不能有连续重复字母。'); const id = String(data.levels.length + 1).padStart(6, '0'); data.levels.push({ id, title: $('title').value.trim(), clue: $('clue').value.trim(), answers }); save(); render(); event.currentTarget.reset(); });
+$('levelForm').addEventListener('submit', event => { event.preventDefault(); const answers = [...document.querySelectorAll('.answer')].map(input => normalize(input.value)); if (new Set(answers).size !== 3 || answers.some(word => !word || duplicateLetters(word))) return alert('填写三个不同的英文答案，且不能有连续重复字母。'); const next = data.levels.reduce((max, level) => Math.max(max, Number(level.id) || 0), 0) + 1; const id = String(next).padStart(6, '0'); data.levels.push({ id, clue: $('clue').value.trim(), answers }); save(); render(); event.currentTarget.reset(); });
 $('dailyForm').addEventListener('submit', event => { event.preventDefault(); data.daily[$('dailyDate').value] = $('dailyLevel').value; save(); alert('已加入每日挑战表。'); });
 $('downloadLevels').addEventListener('click', () => download('levels.json', data.levels));
 $('downloadDaily').addEventListener('click', () => download('daily.json', data.daily));
