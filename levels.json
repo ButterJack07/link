@@ -28,5 +28,14 @@
       "ROAD",
       "UMBRELLA"
     ]
+  },
+  {
+    "id": "000004",
+    "clue": "争先恐后",
+    "answers": [
+      "FIRST",
+      "SECOND",
+      "THIRD"
+    ]
   }
 ]
