@@ -27,7 +27,7 @@ function renderRecentDaily() {
   const levelMap = new Map(data.levels.map(level => [String(level.id).padStart(6, '0'), level]));
   const today = new Date();
   today.setHours(12, 0, 0, 0);
-  for (let offset = -7; offset < 13; offset += 1) {
+  for (let offset = 0; offset < 20; offset += 1) {
     const date = new Date(today);
     date.setDate(today.getDate() + offset);
     const key = dateKey(date);
