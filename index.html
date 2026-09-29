@@ -24,7 +24,7 @@
         <p>游戏会从 <code>daily.json</code> 按日期查询对应题目。</p>
       </form>
     </section>
-    <section class="card"><h2>最近 20 天每日挑战</h2><div id="recentDaily" class="recent-daily"></div></section>
+    <section class="card"><h2>近期 20 天每日挑战</h2><p class="daily-note">显示过去 7 天与未来 13 天，方便检查已排期的每日题目。</p><div id="recentDaily" class="recent-daily"></div></section>
     <section class="card publish-card"><h2>直接发布到 GitHub</h2><p>使用只允许修改此仓库 Contents 的 Fine-grained Token。Token 只保存在当前页面内存中，不会写入文件。</p><div class="publish-row"><input id="githubToken" type="password" placeholder="github_pat_..." autocomplete="off"><button id="connectGithub" type="button">连接仓库</button></div><div id="publishStatus" class="publish-status"></div><button id="publishGithub" class="publish-button" type="button">发布当前数据</button></section>
     <section class="card export-card"><div><h2>备用导出</h2><p>也可以下载 JSON 文件后手动提交。</p></div><div class="exports"><button id="downloadLevels" type="button">下载 levels.json</button><button id="downloadDaily" type="button">下载 daily.json</button></div></section>
     <section class="card"><h2>当前题库</h2><div id="levelList"></div></section>

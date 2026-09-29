@@ -21,14 +21,15 @@ function render() {
   $('levelList').innerHTML = data.levels.map(level => `<article><b>${level.id}</b><span>${level.clue}</span><em>${level.answers.join(' / ')}</em></article>`).join('') || '<p>还没有题目。</p>';
   renderRecentDaily();
 }
-function dateKey(date) { return date.toISOString().slice(0, 10); }
+function dateKey(date) { const year = date.getFullYear(); const month = String(date.getMonth() + 1).padStart(2, '0'); const day = String(date.getDate()).padStart(2, '0'); return `${year}-${month}-${day}`; }
 function renderRecentDaily() {
   const rows = [];
   const levelMap = new Map(data.levels.map(level => [String(level.id).padStart(6, '0'), level]));
-  for (let offset = 0; offset < 20; offset += 1) {
-    const date = new Date();
-    date.setHours(12, 0, 0, 0);
-    date.setDate(date.getDate() - offset);
+  const today = new Date();
+  today.setHours(12, 0, 0, 0);
+  for (let offset = -7; offset < 13; offset += 1) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + offset);
     const key = dateKey(date);
     const id = data.daily[key] ? String(data.daily[key]).padStart(6, '0') : '';
     const level = levelMap.get(id);
