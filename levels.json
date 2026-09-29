@@ -64,5 +64,14 @@
       "WIDTH",
       "HEIGHT"
     ]
+  },
+  {
+    "id": "000008",
+    "clue": "五光十色",
+    "answers": [
+      "BLUE",
+      "RED",
+      "GREEN"
+    ]
   }
 ]
